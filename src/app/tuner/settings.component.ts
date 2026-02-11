@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { ModalDialogParams } from '@nativescript/angular';
+import { Application, isAndroid, isIOS } from '@nativescript/core';
 import { AppSettings, SettingsService } from './settings.service';
 import { TunerStyle } from './renderers';
+
+declare const NSBundle: any;
 
 @Component({
   selector: 'ns-settings',
@@ -14,6 +17,8 @@ export class SettingsComponent implements OnInit {
   settings!: AppSettings;
   pitchPresets: { label: string; value: number }[];
   tunerStyles: { value: TunerStyle; name: string; description: string }[];
+  bufferSizePresets: { label: string; value: number; description: string }[];
+  appVersion: string = '1.0.0';
 
   constructor(
     private settingsService: SettingsService,
@@ -21,6 +26,23 @@ export class SettingsComponent implements OnInit {
   ) {
     this.pitchPresets = this.settingsService.PITCH_PRESETS;
     this.tunerStyles = this.settingsService.TUNER_STYLES;
+    this.bufferSizePresets = this.settingsService.BUFFER_SIZE_PRESETS;
+    this.appVersion = this.getAppVersion();
+  }
+
+  private getAppVersion(): string {
+    try {
+      if (isAndroid) {
+        const context = Application.android.context;
+        const packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+        return packageInfo.versionName;
+      } else if (isIOS) {
+        return NSBundle.mainBundle.objectForInfoDictionaryKey('CFBundleShortVersionString');
+      }
+    } catch (e) {
+      console.error('Error getting app version:', e);
+    }
+    return '1.0.0';
   }
 
   ngOnInit(): void {
@@ -67,6 +89,10 @@ export class SettingsComponent implements OnInit {
 
   selectTunerStyle(style: TunerStyle): void {
     this.settingsService.updateSettings({ tunerStyle: style });
+  }
+
+  selectBufferSize(value: number): void {
+    this.settingsService.updateSettings({ bufferSize: value });
   }
 
   resetSettings(): void {

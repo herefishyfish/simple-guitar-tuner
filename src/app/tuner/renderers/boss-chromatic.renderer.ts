@@ -7,9 +7,9 @@ import { TunerColors, TunerRenderer, TunerRendererContext } from './tuner-render
  */
 
 const DARK_COLORS: TunerColors = {
-  background: '#1a1410',
+  background: '#000000',
   text: '#ffeedd',
-  textSecondary: '#665544',
+  textSecondary: '#aa9988',
   inTune: '#00ff44',
   sharp: '#ff4400',
   flat: '#ff4400',
@@ -66,7 +66,12 @@ export class BossChromaticRenderer implements TunerRenderer {
     const meterY = h * 0.72;
     const ledCount = 21; // 10 left + center + 10 right
     const ledWidth = Math.min((w * 0.75) / ledCount, 22);
-    const ledHeight = ledWidth * 0.6;
+    
+    // Make LEDs taller in portrait mode
+    const isPortrait = h > w;
+    const heightMultiplier = isPortrait ? 1.8 : 0.6;
+    const ledHeight = ledWidth * heightMultiplier;
+    
     const ledSpacing = ledWidth * 1.15;
     const totalWidth = (ledCount - 1) * ledSpacing;
     const startX = centerX - totalWidth / 2;
@@ -112,13 +117,13 @@ export class BossChromaticRenderer implements TunerRenderer {
       const ledY = meterY - ledHeight / 2;
 
       if (isLit) {
-        // Glow effect
-        ctx.save();
-        ctx.shadowColor = ledColor;
-        ctx.shadowBlur = 12;
-        ctx.fillStyle = ledColor;
-        ctx.fillRect(ledX, ledY, ledWidth, ledHeight);
-        ctx.restore();
+        // Glow effect - TODO: Fix canvas shadow rendering issue
+        // ctx.save();
+        // ctx.shadowColor = ledColor;
+        // ctx.shadowBlur = 12;
+        // ctx.fillStyle = ledColor;
+        // ctx.fillRect(ledX, ledY, ledWidth, ledHeight);
+        // ctx.restore();
         
         // Bright center
         ctx.fillStyle = ledColor;
@@ -168,14 +173,14 @@ export class BossChromaticRenderer implements TunerRenderer {
       const noteLetter = pitch.note.replace('#', '');
       const isSharp = pitch.note.includes('#');
 
-      // Glow when in tune
-      if (inTune) {
-        ctx.save();
-        ctx.shadowColor = colors.inTune;
-        ctx.shadowBlur = 25;
-        ctx.fillText(noteLetter, centerX - (isSharp ? 25 : 0), noteY);
-        ctx.restore();
-      }
+      // Glow when in tune - TODO: Fix canvas shadow rendering issue
+      // if (inTune) {
+      //   ctx.save();
+      //   ctx.shadowColor = colors.inTune;
+      //   ctx.shadowBlur = 25;
+      //   ctx.fillText(noteLetter, centerX - (isSharp ? 25 : 0), noteY);
+      //   ctx.restore();
+      // }
       ctx.fillText(noteLetter, centerX - (isSharp ? 25 : 0), noteY);
 
       // Sharp symbol
@@ -209,27 +214,29 @@ export class BossChromaticRenderer implements TunerRenderer {
 
     // Flat indicator
     const isFlat = isListening && displayedCents < -5;
-    if (isFlat) {
-      ctx.save();
-      ctx.shadowColor = colors.flat;
-      ctx.shadowBlur = 15;
-      ctx.fillStyle = colors.flat;
-      ctx.fillText('♭', leftX, noteY);
-      ctx.restore();
-    }
+    // TODO: Fix canvas shadow rendering issue
+    // if (isFlat) {
+    //   ctx.save();
+    //   ctx.shadowColor = colors.flat;
+    //   ctx.shadowBlur = 15;
+    //   ctx.fillStyle = colors.flat;
+    //   ctx.fillText('♭', leftX, noteY);
+    //   ctx.restore();
+    // }
     ctx.fillStyle = isFlat ? colors.flat : colors.textSecondary + '25';
     ctx.fillText('♭', leftX, noteY);
 
     // Sharp indicator
     const isSharpTuning = isListening && displayedCents > 5;
-    if (isSharpTuning) {
-      ctx.save();
-      ctx.shadowColor = colors.sharp;
-      ctx.shadowBlur = 15;
-      ctx.fillStyle = colors.sharp;
-      ctx.fillText('♯', rightX, noteY);
-      ctx.restore();
-    }
+    // TODO: Fix canvas shadow rendering issue
+    // if (isSharpTuning) {
+    //   ctx.save();
+    //   ctx.shadowColor = colors.sharp;
+    //   ctx.shadowBlur = 15;
+    //   ctx.fillStyle = colors.sharp;
+    //   ctx.fillText('♯', rightX, noteY);
+    //   ctx.restore();
+    // }
     ctx.fillStyle = isSharpTuning ? colors.sharp : colors.textSecondary + '25';
     ctx.fillText('♯', rightX, noteY);
 

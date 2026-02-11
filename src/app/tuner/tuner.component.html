@@ -1,6 +1,7 @@
 <GridLayout class="page-bg" rows="*">
   <!-- Main tuner canvas - full screen -->
   <Canvas 
+    style="android-elevation: -2;"
     #tunerCanvas
     (ready)="onCanvasReady($event)">
   </Canvas>
@@ -10,6 +11,7 @@
     text="⚙" 
     (tap)="openSettings()"
     class="settings-button"
+    style="android-elevation: -2;"
     horizontalAlignment="right"
     verticalAlignment="top">
   </Button>

@@ -11,6 +11,7 @@ export interface AppSettings {
   showFrequency: boolean;    // Show frequency display
   keepScreenAwake: boolean;  // Prevent screen from turning off
   tunerStyle: TunerStyle;    // Visual style of the tuner
+  bufferSize: number;        // Audio buffer size (responsiveness)
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -19,7 +20,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   noiseThreshold: 0.005,
   showFrequency: true,
   keepScreenAwake: true,
-  tunerStyle: 'polytune'
+  tunerStyle: 'boss',
+  bufferSize: 2048
 };
 
 const SETTINGS_KEY = 'guitar_tuner_settings';
@@ -100,10 +102,17 @@ export class SettingsService {
 
   // Tuner style options
   readonly TUNER_STYLES: { value: TunerStyle; name: string; description: string }[] = [
+    { value: 'boss', ...TUNER_STYLE_INFO.boss },
     { value: 'classic', ...TUNER_STYLE_INFO.classic },
     { value: 'polytune', ...TUNER_STYLE_INFO.polytune },
     { value: 'pitchblack', ...TUNER_STYLE_INFO.pitchblack },
-    { value: 'walrus', ...TUNER_STYLE_INFO.walrus },
-    { value: 'boss', ...TUNER_STYLE_INFO.boss }
+    { value: 'walrus', ...TUNER_STYLE_INFO.walrus }
+  ];
+
+  // Buffer size presets (responsiveness)
+  readonly BUFFER_SIZE_PRESETS = [
+    { label: 'Fast', value: 1024, description: '~43 fps, lower accuracy' },
+    { label: 'Balanced', value: 2048, description: '~22 fps, recommended' },
+    { label: 'Accurate', value: 4096, description: '~11 fps, best for low notes' }
   ];
 }

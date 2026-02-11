@@ -70,6 +70,27 @@
         </GridLayout>
       </StackLayout>
 
+      <!-- Responsiveness Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mb-4">
+        <Label text="Responsiveness" class="text-main text-base font-bold mb-1"></Label>
+        <Label text="Trade-off between speed and accuracy" class="text-sub text-xs mb-3"></Label>
+        
+        <StackLayout class="mt-2">
+          <GridLayout 
+            *ngFor="let preset of bufferSizePresets"
+            columns="*, auto" 
+            class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
+            [class.selected]="settings.bufferSize === preset.value"
+            (tap)="selectBufferSize(preset.value)">
+            <StackLayout col="0">
+              <Label [text]="preset.label" class="text-main text-base font-bold"></Label>
+              <Label [text]="preset.description" class="text-sub text-xs mt-0.5"></Label>
+            </StackLayout>
+            <Label col="1" [text]="settings.bufferSize === preset.value ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+          </GridLayout>
+        </StackLayout>
+      </StackLayout>
+
       <!-- Sensitivity Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
         <Label text="Microphone Sensitivity" class="text-main text-base font-bold mb-1"></Label>
@@ -84,10 +105,19 @@
 
       <!-- Info Section -->
       <StackLayout class="section-bg rounded-xl p-4 mt-6">
-        <Label text="About" class="text-main text-base font-bold mb-1"></Label>
-        <Label text="Guitar Chromatic Tuner" class="text-main text-sm text-center mb-1"></Label>
-        <Label text="Version 1.0.0" class="text-sub text-xs text-center"></Label>
-        <Label text="Built with NativeScript + Angular" class="text-sub text-xs text-center"></Label>
+        <Label text="About" class="text-main text-base font-bold mb-3"></Label>
+        
+        <StackLayout class="page-bg rounded-lg p-4 mb-4">
+          <Label text="Simple Guitar Tuner" class="text-main text-lg font-bold text-center"></Label>
+          <Label [text]="'Version ' + appVersion" class="text-sub text-xs text-center mt-1"></Label>
+        </StackLayout>
+        
+        <Label text="A fast, accurate chromatic tuner for guitar and other instruments. Features multiple tuner styles, adjustable reference pitch, and customizable sensitivity." textWrap="true" class="text-sub text-xs text-center mb-4" style="line-height: 18;"></Label>
+        
+        <StackLayout class="border-t border-themed pt-4">
+          <Label text="Developed by" class="text-sub text-xs text-center mb-2"></Label>
+          <Image src="~/assets/heredev-logo.png" class="h-10" horizontalAlignment="center" stretch="aspectFit"></Image>
+        </StackLayout>
       </StackLayout>
 
     </StackLayout>

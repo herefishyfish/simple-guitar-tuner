@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="100 119.61 251.9373 72" width="251.9373" height="72" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 125.613 158.892 L 100 184.504 L 100 178.689 L 119.798 158.892 L 100 139.094 L 100 133.279 L 125.613 158.892 Z" style="fill: rgb(217, 93, 189);"/>
+  <path d="M 329.534 158.892 L 303.921 184.504 L 303.921 178.689 L 323.719 158.892 L 303.921 139.094 L 303.921 133.279 L 329.534 158.892 Z" style="fill: rgb(217, 93, 189);"/>
+  <path d="M 127.387 158.892 L 153 133.279 L 153 139.094 L 133.202 158.892 L 153 178.689 L 153 184.504 L 127.387 158.892 Z" style="fill: rgb(217, 93, 189);"/>
+  <text style="fill: rgb(217, 93, 189); font-family: 'Ink Free', 'Comic Sans MS', cursive; font-size: 58px; white-space: pre;" x="154.001" y="172.61">HERE</text>
+  <text style="fill: rgb(217, 93, 189); font-family: Arial, sans-serif; font-size: 14px; white-space: pre;" x="322.489" y="182.156">DEV</text>
+  <ellipse style="fill: rgb(217, 93, 189);" cx="309.791" cy="152.498" rx="2.537" ry="2.537"/>
+</svg>

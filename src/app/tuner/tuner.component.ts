@@ -87,7 +87,8 @@ export class TunerComponent implements OnInit, OnDestroy {
         this.updateSystemBarColors();
         this.audioService.updateSettings({
           referencePitch: settings.referencePitch,
-          noiseThreshold: settings.noiseThreshold
+          noiseThreshold: settings.noiseThreshold,
+          bufferSize: settings.bufferSize
         });
       })
     );

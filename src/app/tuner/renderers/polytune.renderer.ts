@@ -121,13 +121,13 @@ export class PolytuneRenderer implements TunerRenderer {
       ctx.roundRect(ledX, ledY, ledWidth, ledHeight, cornerRadius);
       
       if (isLit) {
-        // Glowing effect for lit LEDs
-        ctx.save();
-        ctx.shadowColor = ledColor;
-        ctx.shadowBlur = 15;
-        ctx.fillStyle = ledColor;
-        ctx.fill();
-        ctx.restore();
+        // Glowing effect for lit LEDs - TODO: Fix canvas shadow rendering issue
+        // ctx.save();
+        // ctx.shadowColor = ledColor;
+        // ctx.shadowBlur = 15;
+        // ctx.fillStyle = ledColor;
+        // ctx.fill();
+        // ctx.restore();
         
         // Inner highlight
         ctx.fillStyle = ledColor;
@@ -175,14 +175,14 @@ export class PolytuneRenderer implements TunerRenderer {
       const noteLetter = pitch.note.replace('#', '');
       const isSharp = pitch.note.includes('#');
 
-      // Glow effect when in tune
-      if (absCents <= 3) {
-        ctx.save();
-        ctx.shadowColor = colors.inTune;
-        ctx.shadowBlur = 30;
-        ctx.fillText(noteLetter, centerX - (isSharp ? 20 : 0), noteY);
-        ctx.restore();
-      }
+      // Glow effect when in tune - TODO: Fix canvas shadow rendering issue
+      // if (absCents <= 3) {
+      //   ctx.save();
+      //   ctx.shadowColor = colors.inTune;
+      //   ctx.shadowBlur = 30;
+      //   ctx.fillText(noteLetter, centerX - (isSharp ? 20 : 0), noteY);
+      //   ctx.restore();
+      // }
       ctx.fillText(noteLetter, centerX - (isSharp ? 20 : 0), noteY);
 
       // Sharp symbol

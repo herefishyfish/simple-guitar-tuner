@@ -1,7 +1,7 @@
 import { TunerColors, TunerRenderer, TunerRendererContext } from './tuner-renderer.interface';
 
 const DARK_COLORS: TunerColors = {
-  background: '#0f0f14',
+  background: '#000000',
   text: '#ffffff',
   textSecondary: '#5a5a6e',
   inTune: '#4ade80',
@@ -21,7 +21,7 @@ const LIGHT_COLORS: TunerColors = {
 };
 
 export class ClassicRenderer implements TunerRenderer {
-  name = 'Classic';
+  name = 'Analog';
   description = 'Traditional needle meter';
 
   getColors(theme: 'dark' | 'light'): TunerColors {
@@ -53,10 +53,10 @@ export class ClassicRenderer implements TunerRenderer {
   }
 
   private drawMeter(ctx: CanvasRenderingContext2D, w: number, h: number, displayedCents: number, isListening: boolean, colors: TunerColors): void {
-    const centerX = w / 2;
     const isPortrait = h > w;
-    const centerY = isPortrait ? h * 0.7 : h * 0.75;
-    const radius = isPortrait ? w * 0.4 : Math.min(w * 0.35, h * 0.55);
+    const centerX = isPortrait ? w / 2 : w * 0.65;
+    const centerY = isPortrait ? h * 0.65 : h * 0.7;
+    const radius = isPortrait ? w * 0.4 : Math.min(w * 0.3, h * 0.5);
 
     // Main meter arc background
     ctx.beginPath();
@@ -107,9 +107,9 @@ export class ClassicRenderer implements TunerRenderer {
 
     // Draw "in tune" zone highlight
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius + 4, Math.PI * 1.45, Math.PI * 1.55);
-    ctx.strokeStyle = colors.inTune + '60';
-    ctx.lineWidth = 6;
+    ctx.arc(centerX, centerY, radius, Math.PI * 1.45, Math.PI * 1.55);
+    ctx.strokeStyle = colors.inTune + '40';
+    ctx.lineWidth = 12;
     ctx.lineCap = 'round';
     ctx.stroke();
 
@@ -127,12 +127,12 @@ export class ClassicRenderer implements TunerRenderer {
       needleColor = colors.flat;
     }
 
-    // Needle shadow
-    ctx.save();
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
+    // Needle shadow - TODO: Fix canvas shadow rendering issue
+    // ctx.save();
+    // ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    // ctx.shadowBlur = 8;
+    // ctx.shadowOffsetX = 2;
+    // ctx.shadowOffsetY = 2;
 
     // Draw needle body
     ctx.beginPath();
@@ -144,7 +144,7 @@ export class ClassicRenderer implements TunerRenderer {
     ctx.lineWidth = 4;
     ctx.lineCap = 'round';
     ctx.stroke();
-    ctx.restore();
+    // ctx.restore();
 
     // Draw needle pivot
     ctx.beginPath();
@@ -157,24 +157,24 @@ export class ClassicRenderer implements TunerRenderer {
     ctx.fillStyle = colors.background;
     ctx.fill();
 
-    // Glow effect when in tune
-    if (isListening && absCents <= 5) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius + 4, Math.PI * 1.45, Math.PI * 1.55);
-      ctx.strokeStyle = colors.inTune;
-      ctx.lineWidth = 8;
-      ctx.shadowColor = colors.inTune;
-      ctx.shadowBlur = 20;
-      ctx.stroke();
-      ctx.restore();
-    }
+    // Glow effect when in tune - on the needle pivot
+    // TODO: Fix canvas shadow rendering issue
+    // if (isListening && absCents <= 5) {
+    //   ctx.save();
+    //   ctx.beginPath();
+    //   ctx.arc(centerX, centerY, 12, 0, 2 * Math.PI);
+    //   ctx.fillStyle = colors.inTune;
+    //   ctx.shadowColor = colors.inTune;
+    //   ctx.shadowBlur = 25;
+    //   ctx.fill();
+    //   ctx.restore();
+    // }
   }
 
   private drawNoteDisplay(ctx: CanvasRenderingContext2D, w: number, h: number, pitch: any, displayedCents: number, isListening: boolean, colors: TunerColors): void {
-    const centerX = w / 2;
     const isPortrait = h > w;
-    const noteY = isPortrait ? h * 0.25 : h * 0.3;
+    const noteX = isPortrait ? w / 2 : w * 0.22;
+    const noteY = isPortrait ? h * 0.2 : h * 0.4;
 
     if (pitch && isListening) {
       const absCents = Math.abs(displayedCents);
@@ -184,7 +184,7 @@ export class ClassicRenderer implements TunerRenderer {
       }
 
       // Large note
-      const fontSize = isPortrait ? w * 0.25 : h * 0.35;
+      const fontSize = isPortrait ? w * 0.28 : h * 0.32;
       ctx.font = `bold ${fontSize}px system-ui`;
       ctx.fillStyle = noteColor;
       ctx.textAlign = 'center';
@@ -194,48 +194,54 @@ export class ClassicRenderer implements TunerRenderer {
       const isSharp = pitch.note.includes('#');
 
       // Glow when in tune
-      if (absCents <= 5) {
-        ctx.save();
-        ctx.shadowColor = colors.inTune;
-        ctx.shadowBlur = 25;
-        ctx.fillText(noteLetter, centerX - (isSharp ? fontSize * 0.15 : 0), noteY);
-        ctx.restore();
-      }
-      ctx.fillText(noteLetter, centerX - (isSharp ? fontSize * 0.15 : 0), noteY);
+      // TODO: Fix canvas shadow rendering issue
+      // if (absCents <= 5) {
+      //   ctx.save();
+      //   ctx.shadowColor = colors.inTune;
+      //   ctx.shadowBlur = 25;
+      //   ctx.fillText(noteLetter, noteX - (isSharp ? fontSize * 0.15 : 0), noteY);
+      //   ctx.restore();
+      // }
+      ctx.fillText(noteLetter, noteX - (isSharp ? fontSize * 0.15 : 0), noteY);
 
       // Sharp symbol
       if (isSharp) {
         ctx.font = `bold ${fontSize * 0.4}px system-ui`;
-        ctx.fillText('♯', centerX + fontSize * 0.35, noteY - fontSize * 0.2);
+        ctx.fillText('♯', noteX + fontSize * 0.35, noteY - fontSize * 0.2);
       }
 
       // Octave
       ctx.font = `${fontSize * 0.25}px system-ui`;
       ctx.fillStyle = colors.textSecondary;
-      ctx.fillText(`${pitch.octave}`, centerX + (isSharp ? fontSize * 0.45 : fontSize * 0.3), noteY + fontSize * 0.2);
+      ctx.fillText(`${pitch.octave}`, noteX + (isSharp ? fontSize * 0.45 : fontSize * 0.3), noteY + fontSize * 0.2);
     } else {
       const fontSize = isPortrait ? w * 0.18 : h * 0.25;
       ctx.font = `${fontSize}px system-ui`;
       ctx.fillStyle = colors.textSecondary + '40';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('—', centerX, noteY);
+      ctx.fillText('—', noteX, noteY);
     }
   }
 
   private drawFrequencyDisplay(ctx: CanvasRenderingContext2D, w: number, h: number, pitch: any, displayedCents: number, isListening: boolean, colors: TunerColors): void {
-    const centerX = w / 2;
     const isPortrait = h > w;
-    const freqY = isPortrait ? h * 0.92 : h * 0.55;
+    const freqX = isPortrait ? w / 2 : w * 0.22;
+    const freqY = isPortrait ? h * 0.88 : h * 0.65;
 
-    ctx.font = '18px monospace';
+    ctx.font = '16px monospace';
     ctx.fillStyle = colors.textSecondary;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     if (pitch && isListening) {
       const centsText = displayedCents >= 0 ? `+${Math.round(displayedCents)}` : `${Math.round(displayedCents)}`;
-      ctx.fillText(`${pitch.frequency.toFixed(1)} Hz  •  ${centsText}¢`, centerX, freqY);
+      if (isPortrait) {
+        ctx.fillText(`${pitch.frequency.toFixed(1)} Hz  •  ${centsText}¢`, freqX, freqY);
+      } else {
+        ctx.fillText(`${pitch.frequency.toFixed(1)} Hz`, freqX, freqY);
+        ctx.fillText(`${centsText}¢`, freqX, freqY + 22);
+      }
     }
   }
 }

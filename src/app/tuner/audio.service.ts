@@ -7,6 +7,7 @@ export { PitchData } from './audio-recorder';
 export interface TunerSettings {
   referencePitch: number;
   noiseThreshold: number;
+  bufferSize: number;
 }
 
 @Injectable({
@@ -19,10 +20,12 @@ export class AudioService implements OnDestroy {
   
   private _settings: TunerSettings = {
     referencePitch: 440,
-    noiseThreshold: 0.01
+    noiseThreshold: 0.01,
+    bufferSize: 2048
   };
 
   private recorder: AudioRecorder;
+  private currentBufferSize: number = 2048;
 
   pitchData$: Observable<PitchData | null> = this._pitchData.asObservable();
   isListening$: Observable<boolean> = this._isListening.asObservable();
@@ -31,7 +34,7 @@ export class AudioService implements OnDestroy {
   constructor(private ngZone: NgZone) {
     this.recorder = new AudioRecorder({
       sampleRate: 44100,
-      bufferSize: 4096
+      bufferSize: this._settings.bufferSize
     });
 
     // Set up the audio data callback
@@ -51,7 +54,43 @@ export class AudioService implements OnDestroy {
   }
 
   updateSettings(settings: Partial<TunerSettings>): void {
+    const oldBufferSize = this._settings.bufferSize;
     this._settings = { ...this._settings, ...settings };
+    
+    // If buffer size changed, recreate the recorder
+    if (settings.bufferSize && settings.bufferSize !== oldBufferSize) {
+      this.updateBufferSize(settings.bufferSize);
+    }
+  }
+
+  private updateBufferSize(newBufferSize: number): void {
+    const wasListening = this._isListening.value;
+    
+    // Stop current recording
+    if (wasListening) {
+      this.recorder.stop();
+    }
+    
+    // Dispose old recorder and create new one with updated buffer size
+    this.recorder.dispose();
+    this.currentBufferSize = newBufferSize;
+    
+    this.recorder = new AudioRecorder({
+      sampleRate: 44100,
+      bufferSize: newBufferSize
+    });
+    
+    // Set up the audio data callback again
+    this.recorder.setAudioDataCallback((audioData: number[]) => {
+      this.ngZone.run(() => {
+        this.processAudioData(audioData);
+      });
+    });
+    
+    // Restart if was listening
+    if (wasListening) {
+      this.recorder.start();
+    }
   }
 
   async requestPermission(): Promise<boolean> {

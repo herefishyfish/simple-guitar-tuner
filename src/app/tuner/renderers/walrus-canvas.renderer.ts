@@ -87,15 +87,16 @@ export class WalrusCanvasRenderer implements TunerRenderer {
     const inTune = isListening && pitch && absCents <= 2;
     
     // Draw STATIC alternating vertical lines
-    const lineCount = 30;
+    const lineCount = 31;
     const totalPadding = strobeWidth * 0.1; // 10% padding on each side
     const usableWidth = strobeWidth - totalPadding;
-    const lineSpacing = usableWidth / lineCount;
-    const lineStartX = startX + totalPadding / 2;
+    const lineSpacing = usableWidth / (lineCount - 1); // 30 gaps for 31 lines
+    const centerIndex = Math.floor(lineCount / 2); // Index 15 is the center
     
     for (let i = 0; i < lineCount; i++) {
-      const x = lineStartX + i * lineSpacing;
-      const isAlternate = i % 2 === 0;
+      // Center the lines so index 15 is at w/2
+      const x = w / 2 + (i - centerIndex) * lineSpacing;
+      const isAlternate = i % 2 === 1; // Odd indices are tall lines, even are short
       
       // Calculate distance from center for height variation
       const centerX = w / 2;
@@ -136,8 +137,9 @@ export class WalrusCanvasRenderer implements TunerRenderer {
     ctx.save();
     if (inTune) {
       ctx.fillStyle = colors.inTune;
-      ctx.shadowColor = colors.inTune;
-      ctx.shadowBlur = 15;
+      // TODO: Fix canvas shadow rendering issue
+      // ctx.shadowColor = colors.inTune;
+      // ctx.shadowBlur = 15;
     } else {
       ctx.fillStyle = colors.textSecondary;
     }
@@ -160,8 +162,9 @@ export class WalrusCanvasRenderer implements TunerRenderer {
       // Draw the single indicator line
       ctx.save();
       ctx.fillStyle = indicatorColor;
-      ctx.shadowColor = indicatorColor;
-      ctx.shadowBlur = 10;
+      // TODO: Fix canvas shadow rendering issue
+      // ctx.shadowColor = indicatorColor;
+      // ctx.shadowBlur = 10;
       ctx.fillRect(indicatorX - indicatorWidth / 2, strobeY - indicatorHeight / 2, indicatorWidth, indicatorHeight);
       ctx.restore();
     }
@@ -177,6 +180,7 @@ export class WalrusCanvasRenderer implements TunerRenderer {
 
   private drawNoteDisplay(ctx: CanvasRenderingContext2D, w: number, h: number, pitch: any, displayedCents: number, isListening: boolean, colors: TunerColors): void {
     const noteY = h * 0.55;
+    const isPortrait = h > w;
 
     if (pitch && isListening) {
       const absCents = Math.abs(displayedCents);
@@ -185,8 +189,8 @@ export class WalrusCanvasRenderer implements TunerRenderer {
         noteColor = colors.inTune;
       }
 
-      // Large note letter
-      const fontSize = Math.min(w, h) * 0.35;
+      // Large note letter - bigger in portrait mode
+      const fontSize = isPortrait ? w * 0.45 : Math.min(w, h) * 0.35;
       ctx.font = `bold ${fontSize}px system-ui`;
       ctx.fillStyle = noteColor;
       ctx.textAlign = 'center';
@@ -195,14 +199,14 @@ export class WalrusCanvasRenderer implements TunerRenderer {
       const noteLetter = pitch.note.replace('#', '');
       const isSharp = pitch.note.includes('#');
 
-      // Glow effect when in tune
-      if (absCents <= 2) {
-        ctx.save();
-        ctx.shadowColor = colors.inTune;
-        ctx.shadowBlur = 30;
-        ctx.fillText(noteLetter, w / 2, noteY);
-        ctx.restore();
-      }
+      // Glow effect when in tune - TODO: Fix canvas shadow rendering issue
+      // if (absCents <= 2) {
+      //   ctx.save();
+      //   ctx.shadowColor = colors.inTune;
+      //   ctx.shadowBlur = 30;
+      //   ctx.fillText(noteLetter, w / 2, noteY);
+      //   ctx.restore();
+      // }
       ctx.fillText(noteLetter, w / 2, noteY);
 
       // Sharp symbol

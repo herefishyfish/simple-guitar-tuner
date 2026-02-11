@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.guitartuner',
+  id: 'dev.herefishy.simpleguitartuner',
   appPath: 'src',
   appResourcesPath: 'App_Resources',
   android: {

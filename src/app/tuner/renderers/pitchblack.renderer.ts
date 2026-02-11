@@ -112,13 +112,13 @@ export class PitchblackRenderer implements TunerRenderer {
       ctx.arc(x, y, ledRadius, 0, 2 * Math.PI);
 
       if (isLit) {
-        // Glowing effect
-        ctx.save();
-        ctx.shadowColor = ledColor;
-        ctx.shadowBlur = 25;
-        ctx.fillStyle = ledColor;
-        ctx.fill();
-        ctx.restore();
+        // Glowing effect - TODO: Fix canvas shadow rendering issue
+        // ctx.save();
+        // ctx.shadowColor = ledColor;
+        // ctx.shadowBlur = 25;
+        // ctx.fillStyle = ledColor;
+        // ctx.fill();
+        // ctx.restore();
         
         ctx.fillStyle = ledColor;
         ctx.fill();
@@ -167,14 +167,14 @@ export class PitchblackRenderer implements TunerRenderer {
       const noteLetter = pitch.note.replace('#', '');
       const isSharp = pitch.note.includes('#');
 
-      // Glow when in tune
-      if (absCents <= 3) {
-        ctx.save();
-        ctx.shadowColor = colors.inTune;
-        ctx.shadowBlur = 25;
-        ctx.fillText(noteLetter, centerX - (isSharp ? 15 : 0), centerY);
-        ctx.restore();
-      }
+      // Glow when in tune - TODO: Fix canvas shadow rendering issue
+      // if (absCents <= 3) {
+      //   ctx.save();
+      //   ctx.shadowColor = colors.inTune;
+      //   ctx.shadowBlur = 25;
+      //   ctx.fillText(noteLetter, centerX - (isSharp ? 15 : 0), centerY);
+      //   ctx.restore();
+      // }
       ctx.fillText(noteLetter, centerX - (isSharp ? 15 : 0), centerY);
 
       if (isSharp) {

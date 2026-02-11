@@ -31,7 +31,7 @@ export interface TunerRenderer {
 }
 
 export const TUNER_STYLE_INFO: Record<TunerStyle, { name: string; description: string }> = {
-  classic: { name: 'Classic', description: 'Traditional needle meter' },
+  classic: { name: 'Analog', description: 'Traditional needle meter' },
   polytune: { name: 'LED Bar', description: 'Multi-segment LED display' },
   pitchblack: { name: 'Circular', description: 'Circular LED meter' },
   walrus: { name: 'Strobe', description: 'Strobe-style display' },

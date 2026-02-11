@@ -32,6 +32,9 @@ dependencies:
   '@nativescript-community/insomnia':
     specifier: ^2.0.2
     version: 2.0.2
+  '@nativescript-community/ui-svg':
+    specifier: ^0.2.16
+    version: 0.2.16(@nativescript-community/ui-canvas@4.6.44)
   '@nativescript/angular':
     specifier: ^20.0.0
     version: 20.0.0
@@ -2840,8 +2843,26 @@ packages:
     dev: true
     optional: true
 
+  /@nativescript-community/arraybuffers@1.1.5:
+    resolution: {integrity: sha512-Tcvb8Y+i71UUHiOd59KZefP1UmOXDYKg/Oy2KGf1CgPH7i0TlosBxYJwwczq2csuuKYG4Bde//K+I/soym+8eg==}
+    dev: false
+
   /@nativescript-community/insomnia@2.0.2:
     resolution: {integrity: sha512-8hd476OL6jx2Auzk37n3MAGeyPHoBxP56WdaxZ7Cf1vjY/WFtPAaClcM4LZC1UPKkuUcM2qICNnihRu51spjdw==}
+    dev: false
+
+  /@nativescript-community/ui-canvas@4.6.44:
+    resolution: {integrity: sha512-BRnTyzy04NEPZ0nI1cFjRv99XQttEf41yiiigyw6i+r2GGQ+Ls7gEwAqTR4GUpT3CmQwEPa9WHC0yE6P4KXyfQ==}
+    dependencies:
+      '@nativescript-community/arraybuffers': 1.1.5
+    dev: false
+
+  /@nativescript-community/ui-svg@0.2.16(@nativescript-community/ui-canvas@4.6.44):
+    resolution: {integrity: sha512-a+hWD9wlXY9DDn11mILS77+EKhm0CLiTVmkZ4KQIUm7tdI4z6cdL0oJcuJPaiQ77hXqhm59o5ha51z2Mkrvo2Q==}
+    peerDependencies:
+      '@nativescript-community/ui-canvas': ^4.6.41
+    dependencies:
+      '@nativescript-community/ui-canvas': 4.6.44
     dev: false
 
   /@nativescript/android@9.0.2:
