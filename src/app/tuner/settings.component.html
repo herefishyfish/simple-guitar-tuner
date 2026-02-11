@@ -41,12 +41,32 @@
           <Button 
             *ngFor="let preset of pitchPresets; let i = index"
             [col]="i"
-            [text]="preset.label"
+            [text]="preset.value + ' Hz' + (preset.default ? ' (Standard)' : '')"
             (tap)="selectPitch(preset.value)"
-            [class.selected]="settings.referencePitch === preset.value"
+            [class.selected]="settings.referencePitch === preset.value && !showCustomPitch"
+            style="line-height: 1;"
+            class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">
+          </Button>
+          <Button 
+            col="3"
+            text="Custom"
+            (tap)="toggleCustomPitch()"
+            [class.selected]="showCustomPitch || !isPresetSelected()"
             class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">
           </Button>
         </GridLayout>
+
+        <!-- Custom Pitch Editor -->
+        <StackLayout *ngIf="showCustomPitch || !isPresetSelected()" class="mt-4 page-bg rounded-lg p-3">
+          <Label text="Fine Tune" class="text-sub text-xs text-center mb-2"></Label>
+          <GridLayout columns="auto, auto, *, auto, auto" class="h-12">
+            <Button col="0" text="−1" (tap)="adjustCustomPitch(-1)" class="pitch-adjust-button text-sub"></Button>
+            <Button col="1" text="−.1" (tap)="adjustCustomPitch(-0.1)" class="pitch-adjust-button text-sub"></Button>
+            <Label col="2" [text]="settings.referencePitch.toFixed(1) + ' Hz'" class="text-accent text-lg font-bold text-center align-middle"></Label>
+            <Button col="3" text="+.1" (tap)="adjustCustomPitch(0.1)" class="pitch-adjust-button text-sub"></Button>
+            <Button col="4" text="+1" (tap)="adjustCustomPitch(1)" class="pitch-adjust-button text-sub"></Button>
+          </GridLayout>
+        </StackLayout>
       </StackLayout>
 
       <!-- Display Section -->

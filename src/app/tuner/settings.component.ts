@@ -19,6 +19,10 @@ export class SettingsComponent implements OnInit {
   tunerStyles: { value: TunerStyle; name: string; description: string }[];
   bufferSizePresets: { label: string; value: number; description: string }[];
   appVersion: string = '1.0.0';
+  
+  // Custom pitch editor state
+  showCustomPitch = false;
+  customPitchValue = 440.0;
 
   // Static sensitivity levels (threshold values)
   readonly SENSITIVITY_LEVELS = [
@@ -66,7 +70,25 @@ export class SettingsComponent implements OnInit {
   }
 
   selectPitch(value: number): void {
+    this.showCustomPitch = false;
     this.settingsService.updateSettings({ referencePitch: value });
+  }
+
+  toggleCustomPitch(): void {
+    this.showCustomPitch = !this.showCustomPitch;
+    if (this.showCustomPitch) {
+      this.customPitchValue = this.settings.referencePitch;
+    }
+  }
+
+  adjustCustomPitch(delta: number): void {
+    this.customPitchValue = Math.round((this.customPitchValue + delta) * 10) / 10;
+    this.customPitchValue = Math.max(400, Math.min(480, this.customPitchValue));
+    this.settingsService.updateSettings({ referencePitch: this.customPitchValue });
+  }
+
+  isPresetSelected(): boolean {
+    return this.pitchPresets.some(p => p.value === this.settings.referencePitch);
   }
 
   toggleTheme(): void {

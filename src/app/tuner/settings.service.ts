@@ -94,10 +94,9 @@ export class SettingsService {
 
   // Reference pitch presets
   readonly PITCH_PRESETS = [
-    { label: '432 Hz', value: 432 },
-    { label: '440 Hz (Standard)', value: 440 },
-    { label: '442 Hz', value: 442 },
-    { label: '444 Hz', value: 444 }
+    { label: '432', value: 432, default: false },
+    { label: '440', value: 440, default: true },
+    { label: '442', value: 442, default: false }
   ];
 
   // Tuner style options

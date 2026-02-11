@@ -100,6 +100,18 @@
     @apply bg-border-light text-primary;
   }
 
+  /* Pitch adjustment button */
+  .pitch-adjust-button {
+    @apply bg-border text-white font-bold text-sm border-0;
+    width: 40;
+    height: 36;
+    border-radius: 8;
+    margin: 0 2;
+  }
+  .ns-light .pitch-adjust-button {
+    @apply bg-border-light text-primary;
+  }
+
   /* Settings overlay */
   .settings-overlay {
     @apply bg-primary;
