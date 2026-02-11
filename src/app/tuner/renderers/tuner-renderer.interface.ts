@@ -1,6 +1,6 @@
 import { PitchData } from '../audio.service';
 
-export type TunerStyle = 'classic' | 'polytune' | 'pitchblack' | 'walrus' | 'boss';
+export type TunerStyle = 'classic' | 'polytune' | 'pitchblack' | 'walrus' | 'boss' | 'modern';
 
 export interface TunerColors {
   background: string;
@@ -35,5 +35,6 @@ export const TUNER_STYLE_INFO: Record<TunerStyle, { name: string; description: s
   polytune: { name: 'LED Bar', description: 'Multi-segment LED display' },
   pitchblack: { name: 'Circular', description: 'Circular LED meter' },
   walrus: { name: 'Strobe', description: 'Strobe-style display' },
-  boss: { name: 'Chromatic', description: 'Horizontal LED bar' }
+  boss: { name: 'Chromatic', description: 'Horizontal LED bar' },
+  modern: { name: 'Modern', description: 'Minimal waveform display' }
 };

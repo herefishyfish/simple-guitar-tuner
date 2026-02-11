@@ -105,7 +105,8 @@ export class SettingsService {
     { value: 'classic', ...TUNER_STYLE_INFO.classic },
     { value: 'polytune', ...TUNER_STYLE_INFO.polytune },
     { value: 'pitchblack', ...TUNER_STYLE_INFO.pitchblack },
-    { value: 'walrus', ...TUNER_STYLE_INFO.walrus }
+    { value: 'walrus', ...TUNER_STYLE_INFO.walrus },
+    { value: 'modern', ...TUNER_STYLE_INFO.modern }
   ];
 
   // Buffer size presets (responsiveness)

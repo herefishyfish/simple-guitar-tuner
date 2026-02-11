@@ -16,7 +16,8 @@ import {
   PolytuneRenderer,
   PitchblackRenderer,
   WalrusCanvasRenderer,
-  BossChromaticRenderer
+  BossChromaticRenderer,
+  ModernRenderer
 } from './renderers';
 
 // Register the Canvas element
@@ -28,7 +29,8 @@ const RENDERERS: Record<TunerStyle, TunerRenderer> = {
   polytune: new PolytuneRenderer(),
   pitchblack: new PitchblackRenderer(),
   walrus: new WalrusCanvasRenderer(),
-  boss: new BossChromaticRenderer()
+  boss: new BossChromaticRenderer(),
+  modern: new ModernRenderer()
 };
 
 @Component({
