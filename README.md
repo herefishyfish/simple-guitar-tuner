@@ -4,9 +4,16 @@ A mobile guitar tuner app built with NativeScript and Angular.
 
 ## Screenshots
 
-| Android                                                                   | iOS                                                    |
-| ------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `<img src="screenshots/Android/Screenshot_1770797149.png" width="300">` | `<img src="screenshots/iOS/screen.png" width="300">` |
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Android/Screenshot_1770797149.png" width="300"></td>
+    <td><img src="screenshots/iOS/screen.png" width="300"></td>
+  </tr>
+</table>
 
 ## Features
 
