@@ -29,7 +29,10 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>microphone</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs microphone access to detect pitch for tuning your guitar.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

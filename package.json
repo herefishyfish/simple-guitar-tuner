@@ -12,18 +12,23 @@
     "@angular/platform-browser": "~20.2.0",
     "@angular/platform-browser-dynamic": "~20.2.0",
     "@angular/router": "~20.2.0",
+    "@nativescript-community/insomnia": "^2.0.2",
     "@nativescript/angular": "^20.0.0",
+    "@nativescript/canvas": "2.0.0-rc.22",
     "@nativescript/core": "~9.0.0",
+    "@norrix/client-sdk": "^0.0.25",
     "rxjs": "~7.8.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~20.2.0",
     "@angular/compiler-cli": "~20.2.0",
+    "@nativescript/android": "9.0.2",
     "@nativescript/tailwind": "^2.1.0",
     "@nativescript/types": "~9.0.0",
     "@nativescript/webpack": "~5.0.25",
     "@ngtools/webpack": "~20.2.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "~3.4.0",
     "typescript": "~5.8.0"
   }

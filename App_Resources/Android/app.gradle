@@ -9,6 +9,7 @@ android {
   // ndkVersion ""
 
   defaultConfig {
+    buildConfigField "String", "norrixFingerprintHash", "\"a67a5513b26f5de58f7862272e44a536869f621b919ad0374902fb249254651c\""
     minSdkVersion 24
     targetSdkVersion 35
 
@@ -17,6 +18,7 @@ android {
     versionName "1.0.0"
     
     generatedDensities = []
+  
   }
 
   aaptOptions {

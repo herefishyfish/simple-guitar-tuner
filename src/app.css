@@ -1,3 +1,122 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Page background */
+  .page-bg {
+    @apply bg-primary;
+  }
+  .ns-light .page-bg {
+    @apply bg-primary-light;
+  }
+
+  /* Section background */
+  .section-bg {
+    @apply bg-secondary;
+  }
+  .ns-light .section-bg {
+    @apply bg-secondary-light;
+  }
+
+  /* Primary text */
+  .text-main {
+    @apply text-white;
+  }
+  .ns-light .text-main {
+    @apply text-primary;
+  }
+
+  /* Secondary/muted text */
+  .text-sub {
+    @apply text-muted;
+  }
+  .ns-light .text-sub {
+    @apply text-muted-light;
+  }
+
+  /* Border color */
+  .border-themed {
+    @apply border-border;
+  }
+  .ns-light .border-themed {
+    @apply border-border-light;
+  }
+
+  /* Accent color */
+  .text-accent {
+    @apply text-green-400;
+  }
+  .ns-light .text-accent {
+    @apply text-green-500;
+  }
+
+  /* Warning color */
+  .text-warn {
+    @apply text-orange-500;
+  }
+  .ns-light .text-warn {
+    @apply text-orange-600;
+  }
+
+  /* Settings button */
+  .settings-button {
+    @apply text-white text-3xl m-3 border-0;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 50;
+    height: 50;
+    border-radius: 25;
+  }
+  .ns-light .settings-button {
+    @apply text-primary;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Pitch button states */
+  .pitch-button.selected {
+    @apply bg-green-400 border-green-400;
+    color: #1a1a2e;
+  }
+  .ns-light .pitch-button.selected {
+    @apply bg-green-500 border-green-500 text-white;
+  }
+
+  /* Style row selected state */
+  .style-row.selected {
+    @apply bg-secondary border-green-400 border-2;
+  }
+  .ns-light .style-row.selected {
+    @apply bg-tertiary-light border-green-500;
+  }
+
+  /* Sensitivity button */
+  .sensitivity-button {
+    @apply bg-border text-white font-bold text-xl border-0;
+    width: 44;
+    height: 44;
+    border-radius: 22;
+  }
+  .ns-light .sensitivity-button {
+    @apply bg-border-light text-primary;
+  }
+
+  /* Settings overlay */
+  .settings-overlay {
+    @apply bg-primary;
+  }
+  .ns-light .settings-overlay {
+    @apply bg-primary-light;
+  }
+}
+
+/* Base page styles */
+Page {
+  @apply bg-primary;
+  status-bar-color: '#0a0a0a';
+  navigation-bar-color: '#0a0a0a';
+}
+.ns-light Page {
+  @apply bg-primary-light;
+  status-bar-color: '#ffffff';
+  navigation-bar-color: '#ffffff';
+}

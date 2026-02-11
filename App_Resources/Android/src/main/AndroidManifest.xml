@@ -8,8 +8,7 @@
 		android:largeScreens="true"
 		android:xlargeScreens="true"/>
 
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -28,6 +27,7 @@
 			android:theme="@style/LaunchScreenTheme"
 			android:hardwareAccelerated="true"
       		android:launchMode="singleTask"
+			android:screenOrientation="unspecified"
 			android:exported="true">
 
 			<meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />

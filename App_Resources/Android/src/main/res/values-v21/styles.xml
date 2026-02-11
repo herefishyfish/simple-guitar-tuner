@@ -3,8 +3,10 @@
 
     <!-- Application theme -->
     <style name="AppThemeBase21" parent="AppThemeBase">
-        <!-- Uncomment this to make the app show underneat the status bar -->
-        <!-- <item name="android:windowTranslucentStatus">true</item> -->
+        <!-- Allow programmatic control of status/navigation bar colors -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
 
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
         <item name="android:timePickerStyle">@style/SpinnerTimePicker</item>

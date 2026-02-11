@@ -1,0 +1,95 @@
+<GridLayout rows="auto, *" class="page-bg">
+  
+  <!-- Header -->
+  <GridLayout row="0" columns="auto, *, auto" class="section-bg p-3 h-14">
+    <Button col="0" text="Back" (tap)="close()" style="android-elevation: -2;" class="bg-transparent text-accent text-sm border-0 min-w-16"></Button>
+    <Label col="1" text="Settings" class="text-main text-lg font-bold text-center align-middle"></Label>
+    <Button col="2" text="Reset" (tap)="resetSettings()" style="android-elevation: -2;" class="bg-transparent text-warn text-sm border-0 min-w-16"></Button>
+  </GridLayout>
+
+  <!-- Settings content -->
+  <ScrollView row="1">
+    <StackLayout class="p-4">
+
+      <!-- Tuner Style Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mb-4">
+        <Label text="Tuner Style" class="text-main text-base font-bold mb-1"></Label>
+        <Label text="Choose your preferred visual style" class="text-sub text-xs mb-3"></Label>
+        
+        <StackLayout class="mt-2">
+          <GridLayout 
+            *ngFor="let style of tunerStyles"
+            columns="*, auto" 
+            class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
+            [class.selected]="settings.tunerStyle === style.value"
+            (tap)="selectTunerStyle(style.value)">
+            <StackLayout col="0">
+              <Label [text]="style.name" class="text-main text-base font-bold"></Label>
+              <Label [text]="style.description" class="text-sub text-xs mt-0.5"></Label>
+            </StackLayout>
+            <Label col="1" [text]="settings.tunerStyle === style.value ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+          </GridLayout>
+        </StackLayout>
+      </StackLayout>
+
+      <!-- Reference Pitch Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mb-4">
+        <Label text="Reference Pitch (A4)" class="text-main text-base font-bold mb-1"></Label>
+        <Label text="Standard tuning uses 440 Hz" class="text-sub text-xs mb-3"></Label>
+        
+        <GridLayout columns="*, *, *, *" class="mt-2">
+          <Button 
+            *ngFor="let preset of pitchPresets; let i = index"
+            [col]="i"
+            [text]="preset.label"
+            (tap)="selectPitch(preset.value)"
+            [class.selected]="settings.referencePitch === preset.value"
+            class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">
+          </Button>
+        </GridLayout>
+      </StackLayout>
+
+      <!-- Display Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mb-4">
+        <Label text="Display" class="text-main text-base font-bold mb-1"></Label>
+        
+        <GridLayout columns="*, auto" class="py-3 border-b border-themed" (tap)="toggleShowFrequency()">
+          <StackLayout col="0">
+            <Label text="Show Frequency" class="text-main text-base"></Label>
+            <Label text="Display Hz value on screen" class="text-sub text-xs mt-0.5"></Label>
+          </StackLayout>
+          <Label col="1" [text]="settings.showFrequency ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+        </GridLayout>
+
+        <GridLayout columns="*, auto" class="py-3 border-b border-themed" (tap)="toggleKeepScreenAwake()">
+          <StackLayout col="0">
+            <Label text="Keep Screen Awake" class="text-main text-base"></Label>
+            <Label text="Prevent screen from turning off" class="text-sub text-xs mt-0.5"></Label>
+          </StackLayout>
+          <Label col="1" [text]="settings.keepScreenAwake ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+        </GridLayout>
+      </StackLayout>
+
+      <!-- Sensitivity Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mb-4">
+        <Label text="Microphone Sensitivity" class="text-main text-base font-bold mb-1"></Label>
+        <Label text="Adjust if tuner doesn't respond well" class="text-sub text-xs mb-3"></Label>
+        
+        <GridLayout columns="auto, *, auto" class="mt-3 p-2 page-bg rounded-lg">
+          <Button col="0" text="−" (tap)="adjustSensitivity(0.005)" class="sensitivity-button"></Button>
+          <Label col="1" [text]="getSensitivityLabel()" class="text-accent text-base font-bold text-center align-middle"></Label>
+          <Button col="2" text="+" (tap)="adjustSensitivity(-0.005)" class="sensitivity-button"></Button>
+        </GridLayout>
+      </StackLayout>
+
+      <!-- Info Section -->
+      <StackLayout class="section-bg rounded-xl p-4 mt-6">
+        <Label text="About" class="text-main text-base font-bold mb-1"></Label>
+        <Label text="Guitar Chromatic Tuner" class="text-main text-sm text-center mb-1"></Label>
+        <Label text="Version 1.0.0" class="text-sub text-xs text-center"></Label>
+        <Label text="Built with NativeScript + Angular" class="text-sub text-xs text-center"></Label>
+      </StackLayout>
+
+    </StackLayout>
+  </ScrollView>
+</GridLayout>

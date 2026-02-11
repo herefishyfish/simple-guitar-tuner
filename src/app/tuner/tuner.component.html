@@ -1,0 +1,16 @@
+<GridLayout class="page-bg" rows="*">
+  <!-- Main tuner canvas - full screen -->
+  <Canvas 
+    #tunerCanvas
+    (ready)="onCanvasReady($event)">
+  </Canvas>
+  
+  <!-- Settings button overlay -->
+  <Button 
+    text="⚙" 
+    (tap)="openSettings()"
+    class="settings-button"
+    horizontalAlignment="right"
+    verticalAlignment="top">
+  </Button>
+</GridLayout>
