@@ -32,9 +32,6 @@ dependencies:
   '@nativescript-community/insomnia':
     specifier: ^2.0.2
     version: 2.0.2
-  '@nativescript-community/ui-svg':
-    specifier: ^0.2.16
-    version: 0.2.16(@nativescript-community/ui-canvas@4.6.44)
   '@nativescript/angular':
     specifier: ^20.0.0
     version: 20.0.0
@@ -64,6 +61,9 @@ devDependencies:
   '@nativescript/android':
     specifier: 9.0.2
     version: 9.0.2
+  '@nativescript/preview-cli':
+    specifier: 1.0.14
+    version: 1.0.14(webpack@5.105.1)
   '@nativescript/tailwind':
     specifier: ^2.1.0
     version: 2.1.0(postcss@8.5.6)
@@ -2843,26 +2843,8 @@ packages:
     dev: true
     optional: true
 
-  /@nativescript-community/arraybuffers@1.1.5:
-    resolution: {integrity: sha512-Tcvb8Y+i71UUHiOd59KZefP1UmOXDYKg/Oy2KGf1CgPH7i0TlosBxYJwwczq2csuuKYG4Bde//K+I/soym+8eg==}
-    dev: false
-
   /@nativescript-community/insomnia@2.0.2:
     resolution: {integrity: sha512-8hd476OL6jx2Auzk37n3MAGeyPHoBxP56WdaxZ7Cf1vjY/WFtPAaClcM4LZC1UPKkuUcM2qICNnihRu51spjdw==}
-    dev: false
-
-  /@nativescript-community/ui-canvas@4.6.44:
-    resolution: {integrity: sha512-BRnTyzy04NEPZ0nI1cFjRv99XQttEf41yiiigyw6i+r2GGQ+Ls7gEwAqTR4GUpT3CmQwEPa9WHC0yE6P4KXyfQ==}
-    dependencies:
-      '@nativescript-community/arraybuffers': 1.1.5
-    dev: false
-
-  /@nativescript-community/ui-svg@0.2.16(@nativescript-community/ui-canvas@4.6.44):
-    resolution: {integrity: sha512-a+hWD9wlXY9DDn11mILS77+EKhm0CLiTVmkZ4KQIUm7tdI4z6cdL0oJcuJPaiQ77hXqhm59o5ha51z2Mkrvo2Q==}
-    peerDependencies:
-      '@nativescript-community/ui-canvas': ^4.6.41
-    dependencies:
-      '@nativescript-community/ui-canvas': 4.6.44
     dev: false
 
   /@nativescript/android@9.0.2:
@@ -2904,6 +2886,17 @@ packages:
       glob: 11.1.0
       mkdirp: 3.0.1
     dev: false
+
+  /@nativescript/preview-cli@1.0.14(webpack@5.105.1):
+    resolution: {integrity: sha512-+bBbm4kTA2KysbJjga+ccCCyHY6E+t0rQyXo9Xok2/belhLuA//XZOYFGHtzl6JMPWg/e9LqjUG1h4LONnKIsg==}
+    hasBin: true
+    dependencies:
+      fetch-blob: 3.2.0
+      formdata-polyfill: 4.0.10
+      webpackbar: 5.0.2(webpack@5.105.1)
+    transitivePeerDependencies:
+      - webpack
+    dev: true
 
   /@nativescript/tailwind@2.1.0(postcss@8.5.6):
     resolution: {integrity: sha512-mYIMZuy3g58VCW9bFiKFUnBBX4+vCzqtpSCayMgUgfu7NoxklzDyWPmpMRCMPjh0iNgBU8WJM+lZyMPX7mvV6g==}
@@ -4546,6 +4539,10 @@ packages:
     engines: {node: '>=0.8'}
     dev: true
 
+  /consola@2.15.3:
+    resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
+    dev: true
+
   /content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
@@ -5215,6 +5212,14 @@ packages:
       picomatch: 4.0.3
     dev: true
 
+  /fetch-blob@3.2.0:
+    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
+    engines: {node: ^12.20 || >= 14.13}
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 3.3.3
+    dev: true
+
   /fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
@@ -5299,6 +5304,13 @@ packages:
       tapable: 2.3.0
       typescript: 5.8.2
       webpack: 5.105.1(webpack-cli@6.0.1)
+    dev: true
+
+  /formdata-polyfill@4.0.10:
+    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
+    engines: {node: '>=12.20.0'}
+    dependencies:
+      fetch-blob: 3.2.0
     dev: true
 
   /forwarded@0.2.0:
@@ -6320,6 +6332,12 @@ packages:
     dev: true
     optional: true
 
+  /node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
+    dev: true
+
   /node-forge@1.3.3:
     resolution: {integrity: sha512-rLvcdSyRCyouf6jcOIPe/BgwG/d7hKjzMKOas33/pHEr6gbq18IK9zV7DiPvzsz0oBJPme6qr6H6kGZuI9/DZg==}
     engines: {node: '>= 6.13.0'}
@@ -6787,6 +6805,11 @@ packages:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
+    dev: true
+
+  /pretty-time@1.1.0:
+    resolution: {integrity: sha512-28iF6xPQrP8Oa6uxE6a1biz+lWeTOAPKggvjB8HAs6nVMKZwf5bG++632Dx614hIWgUPkgivRfG+a8uAXGTIbA==}
+    engines: {node: '>=4'}
     dev: true
 
   /process-nextick-args@2.0.1:
@@ -7523,6 +7546,10 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
+  /std-env@3.10.0:
+    resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
+    dev: true
+
   /stdin-discarder@0.2.2:
     resolution: {integrity: sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==}
     engines: {node: '>=18'}
@@ -8004,6 +8031,11 @@ packages:
     dev: true
     optional: true
 
+  /web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
+    dev: true
+
   /webpack-bundle-analyzer@4.10.2:
     resolution: {integrity: sha512-vJptkMm9pk5si4Bv922ZbKLV8UTT4zib4FPgXMhgzUny0bfDDkLXAVQs3ly3fS4/TN9ROFtb0NFrm04UXFE/Vw==}
     engines: {node: '>= 10.13.0'}
@@ -8272,6 +8304,19 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
+
+  /webpackbar@5.0.2(webpack@5.105.1):
+    resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      webpack: 3 || 4 || 5
+    dependencies:
+      chalk: 4.1.2
+      consola: 2.15.3
+      pretty-time: 1.1.0
+      std-env: 3.10.0
+      webpack: 5.105.1(webpack-cli@6.0.1)
     dev: true
 
   /websocket-driver@0.7.4:
