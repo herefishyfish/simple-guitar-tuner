@@ -37,7 +37,7 @@ A mobile guitar tuner app built with NativeScript and Angular.
 
    ```bash
    git clone https://github.com/herefishyfish/simple-guitar-tuner.git
-   cd guitar-tuner
+   cd simple-guitar-tuner
    ```
 2. Install dependencies:
 
@@ -64,7 +64,8 @@ src/
 │   │   ├── tuner.component.ts      # Main tuner UI
 │   │   ├── settings.component.ts   # Settings page
 │   │   ├── audio.service.ts        # Audio processing
-│   │   └── settings.service.ts     # Settings management
+│   │   ├── settings.service.ts     # Settings management
+│   │   └── renderers/              # Visual tuning renderers
 │   ├── app.component.ts
 │   └── app.routes.ts
 ├── assets/
