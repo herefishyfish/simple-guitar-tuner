@@ -65,14 +65,15 @@ export class AudioRecorder extends AudioRecorderCommon {
         audioFormat
       );
       
-      const bufferSize = Math.max(this.bufferSize * 2, minBufferSize);
+      const effectiveBufferSize = Math.max(this.bufferSize, minBufferSize);
+      const recordBufferSize = Math.max(effectiveBufferSize * 2, minBufferSize);
       
       this.audioRecord = new android.media.AudioRecord(
         audioSource,
         this.sampleRate,
         channelConfig,
         audioFormat,
-        bufferSize
+        recordBufferSize
       );
 
       if (this.audioRecord.getState() !== android.media.AudioRecord.STATE_INITIALIZED) {
@@ -80,7 +81,7 @@ export class AudioRecorder extends AudioRecorderCommon {
         return;
       }
 
-      this.audioData = Array.create('short', this.bufferSize);
+      this.audioData = Array.create('short', effectiveBufferSize);
 
       const listener = new android.media.AudioRecord.OnRecordPositionUpdateListener({
         onMarkerReached: (_recorder: android.media.AudioRecord) => {
@@ -89,7 +90,7 @@ export class AudioRecorder extends AudioRecorderCommon {
         onPeriodicNotification: (recorder: android.media.AudioRecord) => {
           if (!this._isRecording || !this.audioDataCallback) return;
           
-          const readResult = recorder.read(this.audioData, 0, this.bufferSize);
+          const readResult = recorder.read(this.audioData, 0, effectiveBufferSize);
           if (readResult > 0) {
             const floatData: number[] = new Array(readResult);
             for (let i = 0; i < readResult; i++) {
@@ -101,7 +102,7 @@ export class AudioRecorder extends AudioRecorderCommon {
       });
 
       this.audioRecord.setRecordPositionUpdateListener(listener);
-      this.audioRecord.setPositionNotificationPeriod(this.bufferSize);
+      this.audioRecord.setPositionNotificationPeriod(effectiveBufferSize);
 
       this.audioRecord.startRecording();
       this._isRecording = true;
