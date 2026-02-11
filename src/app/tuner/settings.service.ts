@@ -17,7 +17,7 @@ export interface AppSettings {
 const DEFAULT_SETTINGS: AppSettings = {
   referencePitch: 440,
   theme: 'dark',
-  noiseThreshold: 0.005,
+  noiseThreshold: 0.01,
   showFrequency: true,
   keepScreenAwake: true,
   tunerStyle: 'boss',

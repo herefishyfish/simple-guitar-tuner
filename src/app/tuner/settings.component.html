@@ -97,9 +97,9 @@
         <Label text="Adjust if tuner doesn't respond well" class="text-sub text-xs mb-3"></Label>
         
         <GridLayout columns="auto, *, auto" class="mt-3 p-2 page-bg rounded-lg">
-          <Button col="0" text="−" (tap)="adjustSensitivity(0.005)" class="sensitivity-button"></Button>
+          <Button col="0" text="−" (tap)="adjustSensitivity(1)" class="sensitivity-button"></Button>
           <Label col="1" [text]="getSensitivityLabel()" class="text-accent text-base font-bold text-center align-middle"></Label>
-          <Button col="2" text="+" (tap)="adjustSensitivity(-0.005)" class="sensitivity-button"></Button>
+          <Button col="2" text="+" (tap)="adjustSensitivity(-1)" class="sensitivity-button"></Button>
         </GridLayout>
       </StackLayout>
 

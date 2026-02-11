@@ -20,6 +20,16 @@ export class SettingsComponent implements OnInit {
   bufferSizePresets: { label: string; value: number; description: string }[];
   appVersion: string = '1.0.0';
 
+  // Static sensitivity levels (threshold values)
+  readonly SENSITIVITY_LEVELS = [
+    { label: 'Full', value: 0.001 },
+    { label: 'Very High', value: 0.005 },
+    { label: 'High', value: 0.01 },
+    { label: 'Normal', value: 0.02 },
+    { label: 'Low', value: 0.04 },
+    { label: 'Very Low', value: 0.08 }
+  ];
+
   constructor(
     private settingsService: SettingsService,
     private params: ModalDialogParams
@@ -68,19 +78,15 @@ export class SettingsComponent implements OnInit {
     this.settingsService.updateSettings({ showFrequency: !this.settings.showFrequency });
   }
 
-  adjustSensitivity(delta: number): void {
-    const current = this.settings.noiseThreshold;
-    const newValue = Math.max(0.005, Math.min(0.1, current + delta));
-    this.settingsService.updateSettings({ noiseThreshold: newValue });
+  adjustSensitivity(direction: number): void {
+    const currentIndex = this.SENSITIVITY_LEVELS.findIndex(l => l.value === this.settings.noiseThreshold);
+    const newIndex = Math.max(0, Math.min(this.SENSITIVITY_LEVELS.length - 1, currentIndex + direction));
+    this.settingsService.updateSettings({ noiseThreshold: this.SENSITIVITY_LEVELS[newIndex].value });
   }
 
   getSensitivityLabel(): string {
-    const threshold = this.settings?.noiseThreshold ?? 0.015;
-    if (threshold <= 0.008) return 'Very High';
-    if (threshold <= 0.015) return 'High';
-    if (threshold <= 0.025) return 'Normal';
-    if (threshold <= 0.05) return 'Low';
-    return 'Very Low';
+    const level = this.SENSITIVITY_LEVELS.find(l => l.value === this.settings?.noiseThreshold);
+    return level?.label ?? 'High';
   }
 
   toggleKeepScreenAwake(): void {
