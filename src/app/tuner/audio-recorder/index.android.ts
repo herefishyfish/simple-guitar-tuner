@@ -5,7 +5,7 @@ export * from './audio.common';
 
 export class AudioRecorder extends AudioRecorderCommon {
   private audioRecord: android.media.AudioRecord | null = null;
-  private recordingTimer: ReturnType<typeof setInterval> | null = null;
+  private audioData: any = null;
 
   constructor(options?: AudioRecorderOptions) {
     super(options);
@@ -80,25 +80,31 @@ export class AudioRecorder extends AudioRecorderCommon {
         return;
       }
 
+      this.audioData = Array.create('short', this.bufferSize);
+
+      const listener = new android.media.AudioRecord.OnRecordPositionUpdateListener({
+        onMarkerReached: (_recorder: android.media.AudioRecord) => {
+          // Not used
+        },
+        onPeriodicNotification: (recorder: android.media.AudioRecord) => {
+          if (!this._isRecording || !this.audioDataCallback) return;
+          
+          const readResult = recorder.read(this.audioData, 0, this.bufferSize);
+          if (readResult > 0) {
+            const floatData: number[] = new Array(readResult);
+            for (let i = 0; i < readResult; i++) {
+              floatData[i] = this.audioData[i] / 32768.0;
+            }
+            this.audioDataCallback(floatData);
+          }
+        }
+      });
+
+      this.audioRecord.setRecordPositionUpdateListener(listener);
+      this.audioRecord.setPositionNotificationPeriod(this.bufferSize);
+
       this.audioRecord.startRecording();
       this._isRecording = true;
-
-      // Start reading audio data
-      const audioData = Array.create('short', this.bufferSize);
-      
-      this.recordingTimer = setInterval(() => {
-        if (!this._isRecording || !this.audioRecord) return;
-        
-        const readResult = this.audioRecord.read(audioData, 0, this.bufferSize);
-        if (readResult > 0 && this.audioDataCallback) {
-          // Convert to float array
-          const floatData: number[] = [];
-          for (let i = 0; i < readResult; i++) {
-            floatData.push(audioData[i] / 32768.0);
-          }
-          this.audioDataCallback(floatData);
-        }
-      }, 50);
     } catch (error) {
       console.error('Error starting Android recording:', error);
     }
@@ -106,11 +112,6 @@ export class AudioRecorder extends AudioRecorderCommon {
 
   stop(): void {
     if (!this._isRecording) return;
-
-    if (this.recordingTimer) {
-      clearInterval(this.recordingTimer);
-      this.recordingTimer = null;
-    }
 
     if (this.audioRecord) {
       try {
@@ -122,6 +123,7 @@ export class AudioRecorder extends AudioRecorderCommon {
       this.audioRecord = null;
     }
 
+    this.audioData = null;
     this._isRecording = false;
   }
 
