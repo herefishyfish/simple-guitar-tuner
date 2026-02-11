@@ -4,9 +4,9 @@ A mobile guitar tuner app built with NativeScript and Angular.
 
 ## Screenshots
 
-| Tuner | Settings |
-|-------|----------|
-| <img src="screenshots/Android/Screenshot_1770797149.png" width="300"> | <img src="screenshots/settings.png" width="300"> |
+| Tuner                                                                     | Settings                                             |
+| ------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `<img src="screenshots/Android/Screenshot_1770797149.png" width="300">` | `<img src="screenshots/settings.png" width="300">` |
 
 ## Features
 
@@ -27,22 +27,23 @@ A mobile guitar tuner app built with NativeScript and Angular.
 ### Installation
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/yourusername/guitar-tuner.git
+   git clone https://github.com/herefishyfish/simple-guitar-tuner.git
    cd guitar-tuner
    ```
-
 2. Install dependencies:
+
    ```bash
    pnpm install
    ```
-
 3. Run on Android:
+
    ```bash
    ns run android
    ```
-
 4. Run on iOS:
+
    ```bash
    ns run ios
    ```
