@@ -2,9 +2,9 @@
   
   <!-- Header -->
   <GridLayout row="0" columns="auto, *, auto" class="section-bg p-3 h-14">
-    <Button col="0" text="Back" (tap)="close()" style="android-elevation: -2;" class="bg-transparent text-accent text-sm border-0 min-w-16"></Button>
-    <Label col="1" text="Settings" class="text-main text-lg font-bold text-center align-middle"></Label>
-    <Button col="2" text="Reset" (tap)="resetSettings()" style="android-elevation: -2;" class="bg-transparent text-warn text-sm border-0 min-w-16"></Button>
+    <Button col="0" (tap)="close()" style="android-elevation: -2;" class="bg-transparent text-accent text-sm border-0 min-w-16">Back</Button>
+    <Label col="1" class="text-main text-lg font-bold text-center align-middle">Settings</Label>
+    <Button col="2" (tap)="resetSettings()" style="android-elevation: -2;" class="bg-transparent text-warn text-sm border-0 min-w-16">Reset</Button>
   </GridLayout>
 
   <!-- Settings content -->
@@ -13,129 +13,130 @@
 
       <!-- Tuner Style Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
-        <Label text="Tuner Style" class="text-main text-base font-bold mb-1"></Label>
-        <Label text="Choose your preferred visual style" class="text-sub text-xs mb-3"></Label>
+        <Label class="text-main text-base font-bold mb-1">Tuner Style</Label>
+        <Label class="text-sub text-xs mb-3">Choose your preferred visual style</Label>
         
         <StackLayout class="mt-2">
-          <GridLayout 
-            *ngFor="let style of tunerStyles"
-            columns="*, auto" 
-            class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
-            [class.selected]="settings.tunerStyle === style.value"
-            (tap)="selectTunerStyle(style.value)">
-            <StackLayout col="0">
-              <Label [text]="style.name" class="text-main text-base font-bold"></Label>
-              <Label [text]="style.description" class="text-sub text-xs mt-0.5"></Label>
-            </StackLayout>
-            <Label col="1" [text]="settings.tunerStyle === style.value ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
-          </GridLayout>
+          @for (style of tunerStyles; track style.value) {
+            <GridLayout 
+              columns="*, auto" 
+              class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
+              [class.selected]="settings.tunerStyle === style.value"
+              (tap)="selectTunerStyle(style.value)">
+              <StackLayout col="0">
+                <Label class="text-main text-base font-bold">{{ style.name }}</Label>
+                <Label class="text-sub text-xs mt-0.5">{{ style.description }}</Label>
+              </StackLayout>
+              <Label col="1" class="text-accent text-xl font-bold align-middle">{{ settings.tunerStyle === style.value ? '✓' : '' }}</Label>
+            </GridLayout>
+          }
         </StackLayout>
       </StackLayout>
 
       <!-- Reference Pitch Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
-        <Label text="Reference Pitch (A4)" class="text-main text-base font-bold mb-1"></Label>
-        <Label text="Standard tuning uses 440 Hz" class="text-sub text-xs mb-3"></Label>
+        <Label class="text-main text-base font-bold mb-1">Reference Pitch (A4)</Label>
+        <Label class="text-sub text-xs mb-3">Standard tuning uses 440 Hz</Label>
         
         <GridLayout columns="*, *, *, *" class="mt-2">
-          <Button 
-            *ngFor="let preset of pitchPresets; let i = index"
-            [col]="i"
-            [text]="preset.value + ' Hz' + (preset.default ? ' (Standard)' : '')"
-            (tap)="selectPitch(preset.value)"
-            [class.selected]="settings.referencePitch === preset.value && !showCustomPitch"
-            style="line-height: 1;"
-            class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">
-          </Button>
+          @for (preset of pitchPresets; track preset.value; let i = $index) {
+            <Button 
+              [col]="i"
+              (tap)="selectPitch(preset.value)"
+              [class.selected]="settings.referencePitch === preset.value && !showCustomPitch"
+              style="line-height: 1;"
+              class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">{{ preset.value }} Hz{{ preset.default ? ' (Standard)' : '' }}</Button>
+          }
           <Button 
             col="3"
-            text="Custom"
             (tap)="toggleCustomPitch()"
             [class.selected]="showCustomPitch || !isPresetSelected()"
-            class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">
-          </Button>
+            class="pitch-button page-bg text-sub text-xs rounded-lg m-1 p-2 border border-themed">Custom</Button>
         </GridLayout>
 
         <!-- Custom Pitch Editor -->
-        <StackLayout *ngIf="showCustomPitch || !isPresetSelected()" class="mt-4 page-bg rounded-lg p-3">
-          <Label text="Fine Tune" class="text-sub text-xs text-center mb-2"></Label>
-          <GridLayout columns="auto, auto, *, auto, auto" class="h-12">
-            <Button col="0" text="−1" (tap)="adjustCustomPitch(-1)" class="pitch-adjust-button text-sub"></Button>
-            <Button col="1" text="−.1" (tap)="adjustCustomPitch(-0.1)" class="pitch-adjust-button text-sub"></Button>
-            <Label col="2" [text]="settings.referencePitch.toFixed(1) + ' Hz'" class="text-accent text-lg font-bold text-center align-middle"></Label>
-            <Button col="3" text="+.1" (tap)="adjustCustomPitch(0.1)" class="pitch-adjust-button text-sub"></Button>
-            <Button col="4" text="+1" (tap)="adjustCustomPitch(1)" class="pitch-adjust-button text-sub"></Button>
-          </GridLayout>
-        </StackLayout>
+        @if (showCustomPitch || !isPresetSelected()) {
+          <StackLayout class="mt-4 page-bg rounded-lg p-3">
+            <Label class="text-sub text-xs text-center mb-2">Fine Tune</Label>
+            <GridLayout columns="auto, auto, *, auto, auto" class="h-12">
+              <Button col="0" (tap)="adjustCustomPitch(-1)" class="pitch-adjust-button text-sub">−1</Button>
+              <Button col="1" (tap)="adjustCustomPitch(-0.1)" class="pitch-adjust-button text-sub">−.1</Button>
+              <Label col="2" class="text-accent text-lg font-bold text-center align-middle">{{ settings.referencePitch.toFixed(1) }} Hz</Label>
+              <Button col="3" (tap)="adjustCustomPitch(0.1)" class="pitch-adjust-button text-sub">+.1</Button>
+              <Button col="4" (tap)="adjustCustomPitch(1)" class="pitch-adjust-button text-sub">+1</Button>
+            </GridLayout>
+          </StackLayout>
+        }
       </StackLayout>
 
       <!-- Display Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
-        <Label text="Display" class="text-main text-base font-bold mb-1"></Label>
+        <Label class="text-main text-base font-bold mb-1">Display</Label>
         
         <GridLayout columns="*, auto" class="py-3 border-b border-themed" (tap)="toggleShowFrequency()">
           <StackLayout col="0">
-            <Label text="Show Frequency" class="text-main text-base"></Label>
-            <Label text="Display Hz value on screen" class="text-sub text-xs mt-0.5"></Label>
+            <Label class="text-main text-base">Show Frequency</Label>
+            <Label class="text-sub text-xs mt-0.5">Display Hz value on screen</Label>
           </StackLayout>
-          <Label col="1" [text]="settings.showFrequency ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+          <Label col="1" class="text-accent text-xl font-bold align-middle">{{ settings.showFrequency ? '✓' : '' }}</Label>
         </GridLayout>
 
         <GridLayout columns="*, auto" class="py-3 border-b border-themed" (tap)="toggleKeepScreenAwake()">
           <StackLayout col="0">
-            <Label text="Keep Screen Awake" class="text-main text-base"></Label>
-            <Label text="Prevent screen from turning off" class="text-sub text-xs mt-0.5"></Label>
+            <Label class="text-main text-base">Keep Screen Awake</Label>
+            <Label class="text-sub text-xs mt-0.5">Prevent screen from turning off</Label>
           </StackLayout>
-          <Label col="1" [text]="settings.keepScreenAwake ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
+          <Label col="1" class="text-accent text-xl font-bold align-middle">{{ settings.keepScreenAwake ? '✓' : '' }}</Label>
         </GridLayout>
       </StackLayout>
 
       <!-- Responsiveness Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
-        <Label text="Responsiveness" class="text-main text-base font-bold mb-1"></Label>
-        <Label text="Trade-off between speed and accuracy" class="text-sub text-xs mb-3"></Label>
+        <Label class="text-main text-base font-bold mb-1">Responsiveness</Label>
+        <Label class="text-sub text-xs mb-3">Trade-off between speed and accuracy</Label>
         
         <StackLayout class="mt-2">
-          <GridLayout 
-            *ngFor="let preset of bufferSizePresets"
-            columns="*, auto" 
-            class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
-            [class.selected]="settings.bufferSize === preset.value"
-            (tap)="selectBufferSize(preset.value)">
-            <StackLayout col="0">
-              <Label [text]="preset.label" class="text-main text-base font-bold"></Label>
-              <Label [text]="preset.description" class="text-sub text-xs mt-0.5"></Label>
-            </StackLayout>
-            <Label col="1" [text]="settings.bufferSize === preset.value ? '✓' : ''" class="text-accent text-xl font-bold align-middle"></Label>
-          </GridLayout>
+          @for (preset of bufferSizePresets; track preset.value) {
+            <GridLayout 
+              columns="*, auto" 
+              class="style-row p-3 my-1 rounded-lg page-bg border border-themed"
+              [class.selected]="settings.bufferSize === preset.value"
+              (tap)="selectBufferSize(preset.value)">
+              <StackLayout col="0">
+                <Label class="text-main text-base font-bold">{{ preset.label }}</Label>
+                <Label class="text-sub text-xs mt-0.5">{{ preset.description }}</Label>
+              </StackLayout>
+              <Label col="1" class="text-accent text-xl font-bold align-middle">{{ settings.bufferSize === preset.value ? '✓' : '' }}</Label>
+            </GridLayout>
+          }
         </StackLayout>
       </StackLayout>
 
       <!-- Sensitivity Section -->
       <StackLayout class="section-bg rounded-xl p-4 mb-4">
-        <Label text="Microphone Sensitivity" class="text-main text-base font-bold mb-1"></Label>
-        <Label text="Adjust if tuner doesn't respond well" class="text-sub text-xs mb-3"></Label>
+        <Label class="text-main text-base font-bold mb-1">Microphone Sensitivity</Label>
+        <Label class="text-sub text-xs mb-3">Adjust if tuner doesn't respond well</Label>
         
         <GridLayout columns="auto, *, auto" class="mt-3 p-2 page-bg rounded-lg">
-          <Button col="0" text="−" (tap)="adjustSensitivity(1)" class="sensitivity-button"></Button>
-          <Label col="1" [text]="getSensitivityLabel()" class="text-accent text-base font-bold text-center align-middle"></Label>
-          <Button col="2" text="+" (tap)="adjustSensitivity(-1)" class="sensitivity-button"></Button>
+          <Button col="0" (tap)="adjustSensitivity(1)" class="sensitivity-button">−</Button>
+          <Label col="1" class="text-accent text-base font-bold text-center align-middle">{{ getSensitivityLabel() }}</Label>
+          <Button col="2" (tap)="adjustSensitivity(-1)" class="sensitivity-button">+</Button>
         </GridLayout>
       </StackLayout>
 
       <!-- Info Section -->
       <StackLayout class="section-bg rounded-xl p-4 mt-6">
-        <Label text="About" class="text-main text-base font-bold mb-3"></Label>
+        <Label class="text-main text-base font-bold mb-3">About</Label>
         
         <StackLayout class="page-bg rounded-lg p-4 mb-4">
-          <Label text="Simple Guitar Tuner" class="text-main text-lg font-bold text-center"></Label>
-          <Label [text]="'Version ' + appVersion" class="text-sub text-xs text-center mt-1"></Label>
+          <Label class="text-main text-lg font-bold text-center">Simple Guitar Tuner</Label>
+          <Label class="text-sub text-xs text-center mt-1">Version {{ appVersion }}</Label>
         </StackLayout>
         
-        <Label text="A fast, accurate chromatic tuner for guitar and other instruments. Features multiple tuner styles, adjustable reference pitch, and customizable sensitivity." textWrap="true" class="text-sub text-xs text-center mb-4" style="line-height: 18;"></Label>
+        <Label textWrap="true" class="text-sub text-xs text-center mb-4" style="line-height: 18;">A fast, accurate chromatic tuner for guitar and other instruments. Features multiple tuner styles, adjustable reference pitch, and customizable sensitivity.</Label>
         
         <StackLayout class="border-t border-themed pt-4">
-          <Label text="Developed by" class="text-sub text-xs text-center mb-2"></Label>
+          <Label class="text-sub text-xs text-center mb-2">Developed by</Label>
           <Image src="~/assets/heredev-logo.png" class="h-10" horizontalAlignment="center" stretch="aspectFit"></Image>
         </StackLayout>
       </StackLayout>
