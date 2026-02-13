@@ -23,8 +23,8 @@ export class AudioRecorder extends AudioRecorderCommon {
     try {
       const audioSession = AVAudioSession.sharedInstance();
       audioSession.setCategoryModeOptionsError(
-        AVAudioSessionCategoryRecord,
-        AVAudioSessionModeDefault,
+        AVAudioSessionCategoryPlayAndRecord,
+        AVAudioSessionModeMeasurement,
         AVAudioSessionCategoryOptions.DefaultToSpeaker
       );
       audioSession.setActiveError(true);
@@ -39,9 +39,11 @@ export class AudioRecorder extends AudioRecorderCommon {
         this.bufferSize,
         format,
         (buffer: AVAudioPCMBuffer, time: AVAudioTime) => {
-          if (!this.audioDataCallback) return;
-          
-          const channelData = buffer.floatChannelData;
+          if (!this.audioDataCallback) {
+            console.log('Audio data callback is not set, skipping audio processing');
+            return;
+          } 
+          const channelData = (buffer.floatChannelData as interop.Reference<any>).value;
           if (channelData) {
             const data = channelData[0];
             const frameLength = buffer.frameLength;

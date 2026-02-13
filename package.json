@@ -14,7 +14,7 @@
     "@angular/router": "~20.2.0",
     "@nativescript-community/insomnia": "^2.0.2",
     "@nativescript/angular": "^20.0.0",
-    "@nativescript/canvas": "2.0.0-rc.22",
+    "@nativescript/canvas": "2.0.0-webgpu.30",
     "@nativescript/core": "~9.0.0",
     "@norrix/client-sdk": "^0.0.25",
     "rxjs": "~7.8.0",
